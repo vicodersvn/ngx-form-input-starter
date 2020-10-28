@@ -123,6 +123,46 @@
           }
         }
       }
+    },
+    "@ngxform/ng-bootstrap-typeahead": {
+      "projectType": "library",
+      "root": "projects/ngxform/ng-bootstrap-typeahead",
+      "sourceRoot": "projects/ngxform/ng-bootstrap-typeahead/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ngxform/ng-bootstrap-typeahead/tsconfig.lib.json",
+            "project": "projects/ngxform/ng-bootstrap-typeahead/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngxform/ng-bootstrap-typeahead/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngxform/ng-bootstrap-typeahead/src/test.ts",
+            "tsConfig": "projects/ngxform/ng-bootstrap-typeahead/tsconfig.spec.json",
+            "karmaConfig": "projects/ngxform/ng-bootstrap-typeahead/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngxform/ng-bootstrap-typeahead/tsconfig.lib.json",
+              "projects/ngxform/ng-bootstrap-typeahead/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "app"
 }

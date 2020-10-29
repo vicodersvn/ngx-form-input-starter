@@ -1,0 +1,3 @@
+<div class="ngx-control-error-messages" *ngIf="control && control.invalid && submitted">
+  <span class="ngx-error-text-danger" *ngFor="let error of errors">{{ error.message }}</span>
+</div>

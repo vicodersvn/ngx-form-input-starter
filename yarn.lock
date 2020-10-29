@@ -1120,6 +1120,13 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.7.0"
 
+"@ng-bootstrap/ng-bootstrap@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-7.0.0.tgz#3bfa62eb52fdb891b1ce693ea11c39127e2d1ab7"
+  integrity sha512-SxUaptGWJmCxM0d2Zy1mx7K7p/YBwGZ69NmmBQVY4BE6p5av0hWrVmv9rzzfBz0rhxU7RPZLor2Jpaoq8Xyl4w==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngtools/webpack@10.1.7":
   version "10.1.7"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-10.1.7.tgz#0778473a92f49ba72a56167104dcfb26ed7cebb0"
@@ -1136,10 +1143,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngxform/platform@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@ngxform/platform/-/platform-0.2.1.tgz#8d76467dcadf436f068229283b829b039ba0c776"
-  integrity sha512-a/u29FIzkZZd90ZxYfUsHIsw7Imv8FzsPnFzpukB3KftZmaIp/DYqc8FmMrPZ2pMYjOvgqCcAzhyVzfEFeuBzg==
+"@ngxform/platform@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@ngxform/platform/-/platform-0.2.2.tgz#556c11d73fdc9608944489d580ecefb69db206fa"
+  integrity sha512-zBiJS91LzwFmflgg/CYGrvz1/5V4P801XkxxdLntjoPK/gnbe6RuSQI7jND7ss0DzPEsO1Vpy0HfMv+CvJ88Mw==
   dependencies:
     tslib "^2.0.0"
 

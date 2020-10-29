@@ -1,0 +1,8 @@
+.ngx-control-error-messages {
+  display: flex;
+  flex-direction: column;
+  .ngx-error-text-danger {
+    color: #e74c3c;
+    font-size: 0.8rem;
+  }
+}

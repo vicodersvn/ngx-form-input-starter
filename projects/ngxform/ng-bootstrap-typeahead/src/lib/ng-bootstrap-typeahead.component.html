@@ -1,0 +1,20 @@
+<ng-template #rt let-r="result" let-t="term">
+  <img [src]="r.flag" class="mr-1" style="width: 16px" />
+  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+</ng-template>
+
+<div class="ngx-control-group">
+  <label *ngIf="getLabel(control) !== null" for="{{ getControlId(control, getLabel(control)) }}">{{ getLabel(control) }}</label>
+  <input
+    id="{{ getControlId(control, getLabel(control)) }}"
+    type="text"
+    placeholder="{{ placeholder }}"
+    [formControl]="control"
+    [ngClass]="combied_classes"
+    [ngbTypeahead]="search"
+    [resultTemplate]="rt"
+    [inputFormatter]="formatter"
+    [editable]="false"
+  />
+</div>
+<ng-template ngxFormErrorAnchor [control]="control"></ng-template>

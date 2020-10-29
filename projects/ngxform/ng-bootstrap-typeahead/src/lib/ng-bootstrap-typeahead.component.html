@@ -1,6 +1,5 @@
 <ng-template #rt let-r="result" let-t="term">
-  <img [src]="r.flag" class="mr-1" style="width: 16px" />
-  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+  <ngb-highlight [result]="resultTemplateLabelFormatter(r)" [term]="t"></ngb-highlight>
 </ng-template>
 
 <div class="ngx-control-group">
@@ -12,7 +11,7 @@
     [formControl]="control"
     [ngClass]="combied_classes"
     [ngbTypeahead]="search"
-    [resultTemplate]="rt"
+    [resultTemplate]="resultTemplate ? resultTemplate : rt"
     [inputFormatter]="formatter"
     [editable]="false"
   />

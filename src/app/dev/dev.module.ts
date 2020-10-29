@@ -10,6 +10,7 @@ import { NgxFormUiModule } from '@ngxform/ui';
 import { NgxFormCommonModule } from '@ngxform/common';
 import { NgxFormErrorComponent } from './ngx-form-error/ngx-form-error.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [FormComponent, NgxFormErrorComponent],
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgxFormModule.forRoot({ validationErrorComponent: NgxFormErrorComponent }),
     NgxFormUiModule,
     NgxFormCommonModule,
-    NgBootstrapTypeaheadModule
+    NgBootstrapTypeaheadModule,
+    NgbTypeaheadModule
   ],
   entryComponents: [NgxFormErrorComponent]
 })

@@ -1,9 +1,10 @@
 import { NgxBootstrapTypeaheadControl } from '../../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { NgxFormGroup } from '@ngxform/platform';
-import { Observable, throwError } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, mapTo, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { TemplateRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -13,6 +14,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FormComponent implements OnInit {
   public demoForm: NgxFormGroup;
+
+  @ViewChild('typeaheadOptionTemplate', { static: true }) typeaheadOptionTemplate: TemplateRef<any>;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -31,11 +35,9 @@ export class FormComponent implements OnInit {
       text$.pipe(
         debounceTime(200),
         distinctUntilChanged(),
-        switchMap((term) => this.http.get(`https://restcountries.eu/rest/v2/all?search=${term}`)),
-        catchError((error) => {
-          console.log({ error });
-          return throwError(error);
-        }),
+        filter((term) => term !== undefined && term !== null && term !== ''),
+        switchMap((term) => this.http.get(`https://restcountries.eu/rest/v2/name/${term.toLowerCase()}`).pipe(catchError((error) => error))),
+
         map((data: any[]) => {
           return data;
         })
@@ -45,9 +47,11 @@ export class FormComponent implements OnInit {
       typeahead: new NgxBootstrapTypeaheadControl('', [Validators.required, Validators.email, Validators.minLength(3)], [], {
         label: 'NgBootstrap Typeahead',
         controlClass: ['form-control'],
-        ngClass: 'd-flex flex-column form-group test',
+        ngClass: 'd-flex flex-column form-group',
         options: typeaheadOptions,
         ngbTypeahead: search,
+        resultTemplate: this.typeaheadOptionTemplate,
+        resultTemplateLabelFormatter: (item: any) => item.name,
         inputFormatter: formatter,
         errorMessages: [
           { key: 'required', message: 'This field is required' },

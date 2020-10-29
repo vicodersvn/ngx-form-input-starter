@@ -3,8 +3,9 @@ import { ControlValueAccessorConnector, NgxFormControl, NgxFormErrorAnchorDirect
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { getControlId, getControlName, getLabel, makeid } from './utils';
+import { TemplateRef } from '@angular/core';
 @Component({
-  selector: 'lib-ng-bootstrap-typeahead',
+  selector: 'ng-bootstrap-typeahead',
   templateUrl: './ng-bootstrap-typeahead.component.html',
   styles: []
 })
@@ -13,6 +14,8 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
   public ngDestroyed$ = new Subject();
   public search?: (text: Observable<string>) => Observable<readonly any[]>;
   public formatter?: (item: any) => string;
+  public resultTemplateLabelFormatter: (item: any) => Observable<string> | string;
+  public resultTemplate: TemplateRef<any>;
 
   @Input() formControl: NgxFormControl;
   @Input() formControlName: string;
@@ -45,13 +48,18 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
       this.formErrorDirective.rerender();
     });
 
+    this.resultTemplate = this.control?.options.resultTemplate ? this.control.options.resultTemplate : undefined;
+
+    this.resultTemplateLabelFormatter = this.control?.options.resultTemplateLabelFormatter ? this.control.options.resultTemplateLabelFormatter : (item) => item.key;
+
     this.search = this.control?.options.ngbTypeahead
       ? this.control.options.ngbTypeahead
       : (text$: Observable<string>) =>
           text$.pipe(
             debounceTime(200),
-            map((term) => (term === '' ? [] : this.control.options.options.filter((v) => v.toString().toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)))
+            map((term) => (term === '' ? [] : this.control.options.options.filter((v) => v.key.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)))
           );
+
     this.formatter = this.control?.options.inputFormatter ? this.control.options.inputFormatter : (item) => item.toString();
   }
 

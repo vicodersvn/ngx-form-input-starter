@@ -30,7 +30,6 @@ export class FormComponent implements OnInit {
     const search = (text$: Observable<string>) =>
       text$.pipe(
         debounceTime(200),
-        // map((term) => (term === '' ? [] : typeaheadOptions.filter((v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)))
         distinctUntilChanged(),
         switchMap((term) => this.http.get(`https://restcountries.eu/rest/v2/all?search=${term}`)),
         catchError((error) => {

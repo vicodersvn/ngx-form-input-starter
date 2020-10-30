@@ -2,8 +2,8 @@ import { Component, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@an
 import { ControlValueAccessorConnector, NgxFormControl, NgxFormErrorAnchorDirective } from '@ngxform/platform';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
-import { getControlId, getControlName, getLabel, makeid } from './utils';
-import { WindowTemplateContext, ResultTemplateContext } from './typeahead/typeahead-window';
+import { getControlId, getControlName, getLabel, makeid } from '../../utils';
+import { WindowTemplateContext, ResultTemplateContext } from '../../typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({

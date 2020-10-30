@@ -4,14 +4,16 @@
 
 <ng-template #defaultWindowTemplate let-results="results" let-term="term" let-formatter="formatter" let-markActive="markActive" let-select="select" let-activeIdx="activeIdx">
   <ng-template #rt let-result="result" let-term="term" let-formatter="formatter">
-    <ngb-highlight [result]="formatter(result)" [term]="term"></ngb-highlight>
+    <ng-container *ngIf="resultTemplateLabelFormatter(result); else cantFormatLabelError">
+      <ngb-highlight [result]="resultTemplateLabelFormatter(result)" [term]="term"></ngb-highlight>
+    </ng-container>
+    <ng-template #cantFormatLabelError> Error: Can't get "key" value of object</ng-template>
   </ng-template>
   <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
     <button type="button" class="dropdown-item" role="option" [id]="id + '-' + idx" [class.active]="idx === activeIdx" (mouseenter)="markActive(idx)" (click)="select(result)">
       <ng-template [ngTemplateOutlet]="resultTemplate || rt" [ngTemplateOutletContext]="{ result: result, term: term, formatter: formatter }"></ng-template>
     </button>
   </ng-template>
-
 </ng-template>
 
 <div class="ngx-control-group">

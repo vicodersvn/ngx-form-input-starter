@@ -43,7 +43,6 @@ export class NgbHighlight implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const result = toString(this.result);
-    console.log(result);
     const terms = Array.isArray(this.term) ? this.term : [this.term];
     const escapedTerms = terms.map((term) => regExpEscape(toString(term))).filter((term) => term);
 

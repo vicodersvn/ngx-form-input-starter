@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgBootstrapTypeaheadComponent } from './ng-bootstrap-typeahead.component';
+import { NgBootstrapTypeaheadComponent } from './controls/basic/ng-bootstrap-typeahead.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFormModule } from '@ngxform/platform';
 import { CommonModule } from '@angular/common';

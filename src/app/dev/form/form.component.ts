@@ -40,7 +40,7 @@ export class FormComponent implements OnInit {
         switchMap((term) => this.http.get(`https://restcountries.eu/rest/v2/name/${term.toLowerCase()}`).pipe(catchError((error) => error))),
 
         map((data: any[]) => {
-          return data;
+          return data.map((item) => Object.assign(item, { key: item.name }));
         })
       );
     const formatter = (item: any) => item.name;
@@ -52,8 +52,8 @@ export class FormComponent implements OnInit {
         options: typeaheadOptions,
         ngbTypeahead: search,
         // resultTemplate: this.typeaheadOptionTemplate,
-        windowTemplate: this.windowTemplate,
-        resultTemplateLabelFormatter: (item: any) => item.name,
+        // windowTemplate: this.windowTemplate,
+        // resultTemplateLabelFormatter: (item: any) => item.name,
         inputFormatter: formatter,
         errorMessages: [
           { key: 'required', message: 'This field is required' },

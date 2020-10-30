@@ -16,8 +16,8 @@ export interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
   ngbTypeahead?: (text: Observable<string>) => Observable<readonly any[]>;
   resultTemplate?: TemplateRef<ResultTemplateContext>;
   windowTemplate?: TemplateRef<WindowTemplateContext>;
-  resultTemplateLabelFormatter?: (item: any) => Observable<string> | string;
   inputFormatter?: (item: any) => string;
+  openOnFocus?: boolean;
 }
 
 const hostAttributes = ['hostClass'];

@@ -1,13 +1,13 @@
 <ng-template #rt let-r="result" let-t="term">
-  <ngb-highlight [result]="resultTemplateLabelFormatter(r)" [term]="t"></ngb-highlight>
+  <ngb-highlight [result]="inputFormatter(r)" [term]="t"></ngb-highlight>
 </ng-template>
 
 <ng-template #defaultWindowTemplate let-results="results" let-term="term" let-formatter="formatter" let-markActive="markActive" let-select="select" let-activeIdx="activeIdx">
   <ng-template #rt let-result="result" let-term="term" let-formatter="formatter">
-    <ng-container *ngIf="resultTemplateLabelFormatter(result); else cantFormatLabelError">
-      <ngb-highlight [result]="resultTemplateLabelFormatter(result)" [term]="term"></ngb-highlight>
+    <ng-container *ngIf="inputFormatter(result); else cantFormatLabelError">
+      <ngb-highlight [result]="inputFormatter(result)" [term]="term"></ngb-highlight>
     </ng-container>
-    <ng-template #cantFormatLabelError> Error: Can't get label. Check your resultTemplateLabelFormatter</ng-template>
+    <ng-template #cantFormatLabelError> Error: Can't get label. Check your inputFormatter</ng-template>
   </ng-template>
   <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
     <button type="button" class="dropdown-item" role="option" [id]="id + '-' + idx" [class.active]="idx === activeIdx" (mouseenter)="markActive(idx)" (click)="select(result)">
@@ -25,9 +25,10 @@
     [formControl]="control"
     [ngClass]="combied_classes"
     [ngbTypeahead]="search"
+    (focus)="focus()"
     [resultTemplate]="resultTemplate ? resultTemplate : rt"
     [windowTemplate]="windowTemplate ? windowTemplate : defaultWindowTemplate"
-    [inputFormatter]="formatter"
+    [inputFormatter]="inputFormatter"
     [editable]="false"
   />
 </div>

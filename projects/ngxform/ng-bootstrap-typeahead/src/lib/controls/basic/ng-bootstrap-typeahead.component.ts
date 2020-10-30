@@ -1,7 +1,7 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessorConnector, NgxFormControl, NgxFormErrorAnchorDirective } from '@ngxform/platform';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { merge, Observable, Subject } from 'rxjs';
+import { debounceTime, filter, map, takeUntil } from 'rxjs/operators';
 import { getControlId, getControlName, getLabel, makeid } from '../../utils';
 import { WindowTemplateContext, ResultTemplateContext } from '../../typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
@@ -22,10 +22,10 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
   public model: any;
   public ngDestroyed$ = new Subject();
   public search?: (text: Observable<string>) => Observable<readonly any[]>;
-  public formatter?: (item: any) => string;
-  public resultTemplateLabelFormatter: (item: any) => Observable<string> | string;
+  public inputFormatter?: (item: any) => string;
   public resultTemplate: TemplateRef<ResultTemplateContext>;
   public windowTemplate: TemplateRef<WindowTemplateContext>;
+  private focus$ = new Subject<null>();
 
   @Input() formControl: NgxFormControl;
   @Input() formControlName: string;
@@ -39,6 +39,10 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
 
   @HostBinding('class') get hostClass(): any {
     return this.control.options.ngClass;
+  }
+
+  focus() {
+    this.focus$.next(null);
   }
 
   get combied_classes(): any {
@@ -61,17 +65,23 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
     this.resultTemplate = this.control?.options.resultTemplate ? this.control.options.resultTemplate : undefined;
     this.windowTemplate = this.control?.options.windowTemplate ? this.control.options.windowTemplate : undefined;
 
-    this.resultTemplateLabelFormatter = this.control?.options.resultTemplateLabelFormatter ? this.control.options.resultTemplateLabelFormatter : (item) => item.key;
+    if (this.control?.options.ngbTypeahead !== undefined) {
+      this.search = this.control.options.ngbTypeahead;
+    } else if (this.control?.options.options !== undefined) {
+      this.search = (text$: Observable<string>) =>
+        merge(text$, this.focus$.pipe(filter(() => this.control?.options.openOnFocus === true))).pipe(
+          debounceTime(200),
+          map((term) => {
+            return term === '' || term === null || term === undefined
+              ? this.control.options.options
+              : this.control.options.options.filter((v) => this.inputFormatter(v).toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
+          })
+        );
+    } else {
+      throw new Error('Either ngbTypeahead or options should be passed');
+    }
 
-    this.search = this.control?.options.ngbTypeahead
-      ? this.control.options.ngbTypeahead
-      : (text$: Observable<string>) =>
-          text$.pipe(
-            debounceTime(200),
-            map((term) => (term === '' ? [] : this.control.options.options.filter((v) => v.key.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)))
-          );
-
-    this.formatter = this.control?.options.inputFormatter ? this.control.options.inputFormatter : (item) => item.toString();
+    this.inputFormatter = this.control?.options.inputFormatter ? this.control.options.inputFormatter : (item) => item.toString();
   }
 
   ngOnDestroy(): void {

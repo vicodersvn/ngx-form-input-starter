@@ -18,8 +18,14 @@
         <li class="nav-item active">
           <a class="nav-link" href="/">Dev</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/demo">Demo</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" (click)="toggle(active)"> Demo </a>
+          <div class="dropdown-menu" [ngClass]="{ show: active }">
+            <a class="dropdown-item" routerLink="/demo/basic">Basic Usage</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
         </li>
       </ul>
     </div>

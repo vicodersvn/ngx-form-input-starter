@@ -7,7 +7,7 @@
     <ng-container *ngIf="resultTemplateLabelFormatter(result); else cantFormatLabelError">
       <ngb-highlight [result]="resultTemplateLabelFormatter(result)" [term]="term"></ngb-highlight>
     </ng-container>
-    <ng-template #cantFormatLabelError> Error: Can't get "key" value of object</ng-template>
+    <ng-template #cantFormatLabelError> Error: Can't get label. Check your resultTemplateLabelFormatter</ng-template>
   </ng-template>
   <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
     <button type="button" class="dropdown-item" role="option" [id]="id + '-' + idx" [class.active]="idx === activeIdx" (mouseenter)="markActive(idx)" (click)="select(result)">

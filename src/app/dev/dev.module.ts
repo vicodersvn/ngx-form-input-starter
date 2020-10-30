@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DevRoutingModule } from './dev-routing.module';
 import { FormComponent } from './form/form.component';
-import { NgBootstrapTypeaheadModule, NgbTypeaheadModule } from '../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
+import { NgxFormTypeaheadModule } from '../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFormModule } from '@ngxform/platform';
 import { NgxFormUiModule } from '@ngxform/ui';
@@ -22,8 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgxFormModule.forRoot({ validationErrorComponent: NgxFormErrorComponent }),
     NgxFormUiModule,
     NgxFormCommonModule,
-    NgBootstrapTypeaheadModule,
-    NgbTypeaheadModule
+    NgxFormTypeaheadModule
   ],
   entryComponents: [NgxFormErrorComponent]
 })

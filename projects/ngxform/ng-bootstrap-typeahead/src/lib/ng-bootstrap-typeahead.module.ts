@@ -10,4 +10,4 @@ import { NgbTypeaheadModule } from './typeahead/typeahead.module';
   imports: [NgbTypeaheadModule, CommonModule, FormsModule, ReactiveFormsModule, NgxFormModule],
   exports: [NgBootstrapTypeaheadComponent]
 })
-export class NgBootstrapTypeaheadModule {}
+export class NgxFormTypeaheadModule {}

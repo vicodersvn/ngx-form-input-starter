@@ -3,7 +3,7 @@ export function toInteger(value: any): number {
 }
 
 export function toString(value: any): string {
-  return (value !== undefined && value !== null) ? `${value}` : '';
+  return value !== undefined && value !== null ? `${value}` : '';
 }
 
 export function getValueInRange(value: number, max: number, min = 0): number {
@@ -26,7 +26,7 @@ export function isDefined(value: any): boolean {
   return value !== undefined && value !== null;
 }
 
-export function padNumber(value: number) {
+export function padNumber(value: number): string {
   if (isNumber(value)) {
     return `0${value}`.slice(-2);
   } else {
@@ -34,13 +34,12 @@ export function padNumber(value: number) {
   }
 }
 
-export function regExpEscape(text) {
+export function regExpEscape(text): string {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
 export function hasClassName(element: any, className: string): boolean {
-  return element && element.className && element.className.split &&
-      element.className.split(/\s+/).indexOf(className) >= 0;
+  return element && element.className && element.className.split && element.className.split(/\s+/).indexOf(className) >= 0;
 }
 
 if (typeof Element !== 'undefined' && !Element.prototype.closest) {
@@ -51,7 +50,7 @@ if (typeof Element !== 'undefined' && !Element.prototype.closest) {
     Element.prototype.matches = (Element.prototype as any).msMatchesSelector || Element.prototype.webkitMatchesSelector;
   }
 
-  Element.prototype.closest = function(s: string) {
+  Element.prototype.closest = function (s: string) {
     let el = this;
     if (!document.documentElement.contains(el)) {
       return null;

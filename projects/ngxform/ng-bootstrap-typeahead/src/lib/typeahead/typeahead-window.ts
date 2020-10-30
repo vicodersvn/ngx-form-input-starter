@@ -1,3 +1,4 @@
+// eslint-disable-file no-host-metadata-property
 import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
 
 import {toString} from '../util/util';

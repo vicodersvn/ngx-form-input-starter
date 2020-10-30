@@ -1,6 +1,9 @@
 {
   "extends": "tslint:recommended",
   "rulesDirectory": ["codelyzer"],
+  "linterOptions": {
+    "exclude": ["projects/ngxform/ng-bootstrap-typeahead/src/lib/typeahead/**/*.ts", "projects/ngxform/ng-bootstrap-typeahead/src/lib/util/**/*.ts"]
+  },
   "rules": {
     "align": {
       "options": ["parameters", "statements"]

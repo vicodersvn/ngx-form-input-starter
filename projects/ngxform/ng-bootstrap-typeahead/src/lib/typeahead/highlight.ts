@@ -1,5 +1,5 @@
-import {Component, Input, OnChanges, ChangeDetectionStrategy, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {regExpEscape, toString} from '../util/util';
+import { Component, Input, OnChanges, ChangeDetectionStrategy, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { regExpEscape, toString } from '../util/util';
 
 /**
  * A component that helps with text highlighting.
@@ -13,9 +13,10 @@ import {regExpEscape, toString} from '../util/util';
   selector: 'ngb-highlight',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  template: `<ng-template ngFor [ngForOf]="parts" let-part let-isOdd="odd">` +
-      `<span *ngIf="isOdd; else even" [class]="highlightClass">{{part}}</span><ng-template #even>{{part}}</ng-template>` +
-      `</ng-template>`,  // template needs to be formatted in a certain way so we don't add empty text nodes
+  template:
+    `<ng-template ngFor [ngForOf]="parts" let-part let-isOdd="odd">` +
+    `<span *ngIf="isOdd; else even" [class]="highlightClass">{{part}}</span><ng-template #even>{{part}}</ng-template>` +
+    `</ng-template>`, // template needs to be formatted in a certain way so we don't add empty text nodes
   styleUrls: ['./highlight.scss']
 })
 export class NgbHighlight implements OnChanges {
@@ -40,11 +41,11 @@ export class NgbHighlight implements OnChanges {
    */
   @Input() term: string | readonly string[];
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const result = toString(this.result);
 
     const terms = Array.isArray(this.term) ? this.term : [this.term];
-    const escapedTerms = terms.map(term => regExpEscape(toString(term))).filter(term => term);
+    const escapedTerms = terms.map((term) => regExpEscape(toString(term))).filter((term) => term);
 
     this.parts = escapedTerms.length ? result.split(new RegExp(`(${escapedTerms.join('|')})`, 'gmi')) : [result];
   }

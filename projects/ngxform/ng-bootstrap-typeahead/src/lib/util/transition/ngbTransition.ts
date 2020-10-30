@@ -25,6 +25,7 @@ const runningTransitions = new Map<HTMLElement, NgbTransitionCtx<any>>();
 
 export const ngbRunTransition = <T>(element: HTMLElement, startFn: NgbTransitionStartFn<T>, options: NgbTransitionOptions<T>): Observable<undefined> => {
   // Getting initial context from options
+  /* eslint no-angle-bracket-type-assertion: 0 */
   let context = options.context || <T>{};
 
   // Checking if there are already running transitions on the given element.

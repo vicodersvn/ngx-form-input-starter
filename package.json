@@ -27,7 +27,6 @@
     "@ngxform/common": "^0.1.2",
     "@ngxform/platform": "^0.2.2",
     "@ngxform/ui": "^0.1.6",
-    "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "husky": "^4.3.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

@@ -1,4 +1,4 @@
-import { NgxBootstrapTypeaheadControl } from '../../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
+import { NgxBootstrapTypeaheadControl, WindowTemplateContext } from '../../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { NgxFormGroup } from '@ngxform/platform';
@@ -16,6 +16,7 @@ export class FormComponent implements OnInit {
   public demoForm: NgxFormGroup;
 
   @ViewChild('typeaheadOptionTemplate', { static: true }) typeaheadOptionTemplate: TemplateRef<any>;
+  @ViewChild('windowTemplate', { static: true }) windowTemplate: TemplateRef<WindowTemplateContext>;
 
   constructor(private http: HttpClient) {}
 
@@ -50,7 +51,8 @@ export class FormComponent implements OnInit {
         ngClass: 'd-flex flex-column form-group',
         options: typeaheadOptions,
         ngbTypeahead: search,
-        resultTemplate: this.typeaheadOptionTemplate,
+        // resultTemplate: this.typeaheadOptionTemplate,
+        windowTemplate: this.windowTemplate,
         resultTemplateLabelFormatter: (item: any) => item.name,
         inputFormatter: formatter,
         errorMessages: [

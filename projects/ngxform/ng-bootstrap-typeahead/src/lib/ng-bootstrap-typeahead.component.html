@@ -2,6 +2,18 @@
   <ngb-highlight [result]="resultTemplateLabelFormatter(r)" [term]="t"></ngb-highlight>
 </ng-template>
 
+<ng-template #defaultWindowTemplate let-results="results" let-term="term" let-formatter="formatter" let-markActive="markActive" let-select="select" let-activeIdx="activeIdx">
+  <ng-template #rt let-result="result" let-term="term" let-formatter="formatter">
+    <ngb-highlight [result]="formatter(result)" [term]="term"></ngb-highlight>
+  </ng-template>
+  <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
+    <button type="button" class="dropdown-item" role="option" [id]="id + '-' + idx" [class.active]="idx === activeIdx" (mouseenter)="markActive(idx)" (click)="select(result)">
+      <ng-template [ngTemplateOutlet]="resultTemplate || rt" [ngTemplateOutletContext]="{ result: result, term: term, formatter: formatter }"></ng-template>
+    </button>
+  </ng-template>
+
+</ng-template>
+
 <div class="ngx-control-group">
   <label *ngIf="getLabel(control) !== null" for="{{ getControlId(control, getLabel(control)) }}">{{ getLabel(control) }}</label>
   <input
@@ -12,6 +24,7 @@
     [ngClass]="combied_classes"
     [ngbTypeahead]="search"
     [resultTemplate]="resultTemplate ? resultTemplate : rt"
+    [windowTemplate]="windowTemplate ? windowTemplate : defaultWindowTemplate"
     [inputFormatter]="formatter"
     [editable]="false"
   />

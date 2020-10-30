@@ -2,6 +2,7 @@ import { ValidatorFn, AbstractControlOptions, AsyncValidatorFn } from '@angular/
 import { NgxFormControl, NgxFormControlOption } from '@ngxform/platform';
 import { Observable } from 'rxjs';
 import { NgBootstrapTypeaheadComponent } from './ng-bootstrap-typeahead.component';
+import { ResultTemplateContext, WindowTemplateContext } from './typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
 
 export interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
@@ -13,7 +14,8 @@ export interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
   hostClass?: any;
   options?: any[];
   ngbTypeahead?: (text: Observable<string>) => Observable<readonly any[]>;
-  resultTemplate?: TemplateRef<any>;
+  resultTemplate?: TemplateRef<ResultTemplateContext>;
+  windowTemplate?: TemplateRef<any>;
   resultTemplateLabelFormatter?: (item: any) => Observable<string> | string;
   inputFormatter?: (item: any) => string;
 }

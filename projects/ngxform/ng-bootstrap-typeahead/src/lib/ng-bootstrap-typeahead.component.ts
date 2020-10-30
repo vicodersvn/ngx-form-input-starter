@@ -3,11 +3,20 @@ import { ControlValueAccessorConnector, NgxFormControl, NgxFormErrorAnchorDirect
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { getControlId, getControlName, getLabel, makeid } from './utils';
+import { WindowTemplateContext, ResultTemplateContext } from './typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'ng-bootstrap-typeahead',
   templateUrl: './ng-bootstrap-typeahead.component.html',
-  styles: []
+  styles: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: NgBootstrapTypeaheadComponent,
+      multi: true
+    }
+  ]
 })
 export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector implements OnInit, OnDestroy {
   public model: any;
@@ -15,7 +24,8 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
   public search?: (text: Observable<string>) => Observable<readonly any[]>;
   public formatter?: (item: any) => string;
   public resultTemplateLabelFormatter: (item: any) => Observable<string> | string;
-  public resultTemplate: TemplateRef<any>;
+  public resultTemplate: TemplateRef<ResultTemplateContext>;
+  public windowTemplate: TemplateRef<WindowTemplateContext>;
 
   @Input() formControl: NgxFormControl;
   @Input() formControlName: string;
@@ -49,6 +59,7 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
     });
 
     this.resultTemplate = this.control?.options.resultTemplate ? this.control.options.resultTemplate : undefined;
+    this.windowTemplate = this.control?.options.windowTemplate ? this.control.options.windowTemplate : undefined;
 
     this.resultTemplateLabelFormatter = this.control?.options.resultTemplateLabelFormatter ? this.control.options.resultTemplateLabelFormatter : (item) => item.key;
 

@@ -32,7 +32,7 @@ import { PlacementArray, positionElements } from '../util/positioning';
 import { isDefined, toString } from '../util/util';
 
 import { NgbTypeaheadConfig } from './typeahead-config';
-import { NgbTypeaheadWindow, ResultTemplateContext } from './typeahead-window';
+import { NgbTypeaheadWindow, ResultTemplateContext, WindowTemplateContext } from './typeahead-window';
 
 const NGB_TYPEAHEAD_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -153,6 +153,12 @@ export class NgbTypeahead implements ControlValueAccessor, OnInit, OnDestroy {
    * Also see the [template for results demo](#/components/typeahead/examples#template) for more details.
    */
   @Input() resultTemplate: TemplateRef<ResultTemplateContext>;
+
+  /**
+   * The template to override the way result are displayed in the popup.
+   *
+   */
+  @Input() windowTemplate: TemplateRef<any>;
 
   /**
    * If `true`, will show the hint in the `<input>` when an item in the result list matches.
@@ -397,6 +403,9 @@ export class NgbTypeahead implements ControlValueAccessor, OnInit, OnDestroy {
         }
         if (this.resultTemplate) {
           this._windowRef!.instance.resultTemplate = this.resultTemplate;
+        }
+        if (this.windowTemplate) {
+          this._windowRef!.instance.windowTemplate = this.windowTemplate;
         }
         this._windowRef!.instance.resetActive();
 

@@ -1,7 +1,7 @@
 // eslint-disable-file no-host-metadata-property
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 
-import {toString} from '../util/util';
+import { toString } from '../util/util';
 
 /**
  * The context for the typeahead result template in case you want to override the default one.
@@ -18,26 +18,33 @@ export interface ResultTemplateContext {
   term: string;
 }
 
+export interface WindowTemplateContext {
+  /**
+   * Your typeahead result item.
+   */
+  results: any[];
+
+  /**
+   * Search term from the `<input>` used to get current result.
+   */
+  term: string;
+
+  /**
+   * The function that converts an item from the result list to a `string` to display in the `<input>` field.
+   *
+   * It is called when the user selects something in the popup or the model value changes, so the input needs to
+   * be updated.
+   */
+
+  fomatter: (item: any) => string;
+}
+
 @Component({
   selector: 'ngb-typeahead-window',
   exportAs: 'ngbTypeaheadWindow',
   encapsulation: ViewEncapsulation.None,
-  host: {'(mousedown)': '$event.preventDefault()', 'class': 'dropdown-menu show', 'role': 'listbox', '[id]': 'id'},
-  template: `
-    <ng-template #rt let-result="result" let-term="term" let-formatter="formatter">
-      <ngb-highlight [result]="formatter(result)" [term]="term"></ngb-highlight>
-    </ng-template>
-    <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
-      <button type="button" class="dropdown-item" role="option"
-        [id]="id + '-' + idx"
-        [class.active]="idx === activeIdx"
-        (mouseenter)="markActive(idx)"
-        (click)="select(result)">
-          <ng-template [ngTemplateOutlet]="resultTemplate || rt"
-          [ngTemplateOutletContext]="{result: result, term: term, formatter: formatter}"></ng-template>
-      </button>
-    </ng-template>
-  `
+  host: { '(mousedown)': '$event.preventDefault()', class: 'dropdown-menu show', role: 'listbox', '[id]': 'id' },
+  templateUrl: './typeahead-window.html'
 })
 export class NgbTypeaheadWindow implements OnInit {
   activeIdx = 0;
@@ -75,20 +82,29 @@ export class NgbTypeaheadWindow implements OnInit {
   @Input() resultTemplate: TemplateRef<ResultTemplateContext>;
 
   /**
+   * A template to override a matching the window default display
+   */
+  @Input() windowTemplate: TemplateRef<WindowTemplateContext>;
+
+  /**
    * Event raised when user selects a particular result row
    */
   @Output('select') selectEvent = new EventEmitter();
 
   @Output('activeChange') activeChangeEvent = new EventEmitter();
 
-  hasActive() { return this.activeIdx > -1 && this.activeIdx < this.results.length; }
+  hasActive() {
+    return this.activeIdx > -1 && this.activeIdx < this.results.length;
+  }
 
-  getActive() { return this.results[this.activeIdx]; }
+  getActive() {
+    return this.results[this.activeIdx];
+  }
 
-  markActive(activeIdx: number) {
+  markActive = (activeIdx: number) => {
     this.activeIdx = activeIdx;
     this._activeChanged();
-  }
+  };
 
   next() {
     if (this.activeIdx === this.results.length - 1) {
@@ -115,9 +131,13 @@ export class NgbTypeaheadWindow implements OnInit {
     this._activeChanged();
   }
 
-  select(item) { this.selectEvent.emit(item); }
+  select = (item) => {
+    this.selectEvent.emit(item);
+  };
 
-  ngOnInit() { this.resetActive(); }
+  ngOnInit() {
+    this.resetActive();
+  }
 
   private _activeChanged() {
     this.activeChangeEvent.emit(this.activeIdx >= 0 ? this.id + '-' + this.activeIdx : undefined);

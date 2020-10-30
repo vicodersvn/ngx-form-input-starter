@@ -14,6 +14,6 @@ export { NgbTypeahead, NgbTypeaheadSelectItemEvent } from './typeahead';
   declarations: [NgbTypeahead, NgbHighlight, NgbTypeaheadWindow],
   exports: [NgbTypeahead, NgbHighlight],
   imports: [CommonModule],
-  entryComponents: [NgbTypeaheadWindow]
+  entryComponents: [NgbTypeaheadWindow, NgbHighlight]
 })
 export class NgbTypeaheadModule {}

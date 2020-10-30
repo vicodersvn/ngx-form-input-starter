@@ -3,11 +3,11 @@ import { NgBootstrapTypeaheadComponent } from './ng-bootstrap-typeahead.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxFormModule } from '@ngxform/platform';
 import { CommonModule } from '@angular/common';
-import { NgbTypeaheadModule } from './typeahead/typeahead.module';
+import { NgbHighlight, NgbTypeaheadModule } from './typeahead/typeahead.module';
 
 @NgModule({
   declarations: [NgBootstrapTypeaheadComponent],
   imports: [NgbTypeaheadModule, CommonModule, FormsModule, ReactiveFormsModule, NgxFormModule],
-  exports: [NgBootstrapTypeaheadComponent]
+  exports: [NgBootstrapTypeaheadComponent, NgbHighlight]
 })
 export class NgxFormTypeaheadModule {}

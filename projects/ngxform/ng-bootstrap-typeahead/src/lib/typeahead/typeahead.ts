@@ -437,4 +437,8 @@ export class NgbTypeahead implements ControlValueAccessor, OnInit, OnDestroy {
     }
     this._subscription = null;
   }
+
+  focus(): void {
+    this._elementRef.nativeElement.focus();
+  }
 }

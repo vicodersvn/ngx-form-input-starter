@@ -2,6 +2,8 @@ import { NgxBootstrapTypeaheadControl, WindowTemplateContext } from '../../../..
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgxFormGroup } from '@ngxform/platform';
 import { Validators } from '@angular/forms';
+import { of, Subject } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-basic',
@@ -26,14 +28,18 @@ export class BasicComponent implements OnInit {
       { name: 'Delaware', flag: 'c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png' },
       { name: 'Florida', flag: 'f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png' }
     ];
+
+    const showFocus = new Subject<boolean>();
     this.demoForm = new NgxFormGroup({
       typeahead: new NgxBootstrapTypeaheadControl('', [Validators.required, Validators.email, Validators.minLength(3)], [], {
         label: 'NgBootstrap Typeahead',
         controlClass: ['form-control'],
         ngClass: 'd-flex flex-column form-group',
         options: typeaheadOptions,
+        defaultValue: typeaheadOptions[0],
         inputFormatter: (item: any) => item.name,
         openOnFocus: true,
+        focus: true,
         errorMessages: [
           { key: 'required', message: 'This field is required' },
           { key: 'email', message: 'Email is invalid' },
@@ -41,8 +47,17 @@ export class BasicComponent implements OnInit {
         ]
       })
     });
+
+    of(true)
+      .pipe(delay(3000))
+      .subscribe((val) => {
+        showFocus.next(true);
+      });
   }
 
+  click(): void {
+    (this.demoForm.get('typeahead') as any).focus();
+  }
   onSubmit(): void {
     this.demoForm.submitted = true;
     console.log(this.demoForm.value);

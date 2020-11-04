@@ -52,6 +52,7 @@ interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
   windowTemplate?: TemplateRef<WindowTemplateContext>;
   inputFormatter?: (item: any) => string;
   openOnFocus?: boolean;
+  focus?: boolean | Subject<boolean>;
   disabled?: boolean;
   fullWithWindow?: boolean;
 }

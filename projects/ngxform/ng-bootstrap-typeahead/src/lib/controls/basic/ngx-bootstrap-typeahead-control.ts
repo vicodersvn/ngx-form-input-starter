@@ -1,6 +1,6 @@
 import { ValidatorFn, AbstractControlOptions, AsyncValidatorFn } from '@angular/forms';
 import { NgxFormControl, NgxFormControlOption } from '@ngxform/platform';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { NgBootstrapTypeaheadComponent } from './ng-bootstrap-typeahead.component';
 import { ResultTemplateContext, WindowTemplateContext } from '../../typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
@@ -18,6 +18,7 @@ export interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
   windowTemplate?: TemplateRef<WindowTemplateContext>;
   inputFormatter?: (item: any) => string;
   openOnFocus?: boolean;
+  focus?: boolean | Subject<boolean>;
   disabled?: boolean;
   fullWithWindow?: boolean;
 }

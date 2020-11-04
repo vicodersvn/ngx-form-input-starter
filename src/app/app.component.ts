@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.ngDestroyed$.complete();
   }
 
-  toggle(active) {
+  toggle(active): void {
     this.active = !active;
   }
 }

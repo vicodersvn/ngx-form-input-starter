@@ -41,7 +41,7 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
     return this.control.options.ngClass;
   }
 
-  focus() {
+  focus(): void {
     this.focus$.next(null);
   }
 

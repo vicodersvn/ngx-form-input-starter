@@ -1,11 +1,12 @@
 import { ValidatorFn, AbstractControlOptions, AsyncValidatorFn } from '@angular/forms';
 import { NgxFormControl, NgxFormControlOption } from '@ngxform/platform';
 import { Observable } from 'rxjs';
-import { NgBootstrapTypeaheadComponent } from './ng-bootstrap-typeahead.component';
 import { ResultTemplateContext, WindowTemplateContext } from '../../typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
+import { NgBootstrapTypeaheadExtendComponent } from './extend.component';
+import { NgxBootstrapTypeaheadOption } from '../basic/ngx-bootstrap-typeahead-control';
 
-export interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
+export interface NgxBootstrapTypeaheadExtendOption extends NgxBootstrapTypeaheadOption {
   type?: string;
   defaultValue?: any;
   hostAttributes?: string[];
@@ -18,15 +19,13 @@ export interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
   windowTemplate?: TemplateRef<WindowTemplateContext>;
   inputFormatter?: (item: any) => string;
   openOnFocus?: boolean;
-  disabled?: boolean;
-  fullWithWindow?: boolean;
 }
 
 const hostAttributes = ['hostClass'];
 
-export const NgxBootstrapTypeaheadType = 'NgxBootstrapTypeahead';
+export const NgxBootstrapTypeaheadExtendType = 'NgxBootstrapTypeaheadExtend';
 
-export class NgxBootstrapTypeaheadControl extends NgxFormControl {
+export class NgxBootstrapTypeaheadExtendControl extends NgxFormControl {
   public options: NgxBootstrapTypeaheadOption;
   constructor(
     formState: any = null,
@@ -37,7 +36,7 @@ export class NgxBootstrapTypeaheadControl extends NgxFormControl {
     if (typeof options === 'object' && options.hasOwnProperty('defaultValue')) {
       formState = options.defaultValue;
     }
-    options = { ...options, hostAttributes, type: NgxBootstrapTypeaheadType, component: NgBootstrapTypeaheadComponent };
+    options = { ...options, hostAttributes, type: NgxBootstrapTypeaheadExtendType, component: NgBootstrapTypeaheadExtendComponent };
     super(formState, validatorOrOpts, asyncValidator, options);
     this.options = options;
   }

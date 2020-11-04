@@ -29,6 +29,7 @@
       (focus)="focus()"
       (focusout)="focusout()"
       (termChanged)="termChanged($event)"
+      (selectItem)="selectItem($event)"
       [resultTemplate]="resultTemplate ? resultTemplate : rt"
       [windowTemplate]="windowTemplate ? windowTemplate : defaultWindowTemplate"
       [inputFormatter]="inputFormatter"

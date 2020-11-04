@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-12 col-sm-6">
+    <ng-template #windowTemplate let-results="results" let-term="term" let-formatter="formatter" let-markActive="markActive" let-select="select" let-activeIdx="activeIdx">
+      <ng-template #rt let-r="result" let-t="term">
+        <img [src]="r.flag" class="mr-1" style="width: 16px" />
+        <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+      </ng-template>
+
+      <ng-template ngFor [ngForOf]="results" let-result let-idx="index">
+        <button type="button" class="dropdown-item" role="option" [id]="id + '-' + idx" [class.active]="idx === activeIdx" (mouseenter)="markActive(idx)" (click)="select(result)">
+          <ng-template [ngTemplateOutlet]="resultTemplate || rt" [ngTemplateOutletContext]="{ result: result, term: term, formatter: formatter }"></ng-template>
+        </button>
+      </ng-template>
+    </ng-template>
+
+    <h4>Vicoders Ngx Form Platform</h4>
+    <form [formGroup]="demoForm" (ngSubmit)="onSubmit()">
+      <ng-template ngxFormAnchor [controls]="demoForm.controls"></ng-template>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

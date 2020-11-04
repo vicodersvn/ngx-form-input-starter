@@ -4,6 +4,7 @@ Add bootstrap typeahead control to NgxForm
 
 - [Vicoders NgxForm Bootstrap Typeahead](#vicoders-ngxform-bootstrap-typeahead)
   - [Install](#install)
+  - [Input Option](#input-option)
   - [Usage](#usage)
     - [Simple typeahead](#simple-typeahead)
     - [Custom template](#custom-template)
@@ -37,6 +38,24 @@ import { NgxFormTypeaheadModule } from '@ngxform/ng-bootstrap-typeahead';
 })
 ```
 <a name="usage"></a>
+
+## Input Option
+
+```js
+interface NgxBootstrapTypeaheadOption extends NgxFormControlOption {
+  defaultValue?: any;
+  hostClass?: any;
+  ngClass?: any;
+  options?: any[];
+  ngbTypeahead?: (text: Observable<string>) => Observable<readonly any[]>;
+  resultTemplate?: TemplateRef<ResultTemplateContext>;
+  windowTemplate?: TemplateRef<WindowTemplateContext>;
+  inputFormatter?: (item: any) => string;
+  openOnFocus?: boolean;
+  disabled?: boolean;
+  fullWithWindow?: boolean;
+}
+```
 
 ## Usage
 

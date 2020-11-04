@@ -32,7 +32,7 @@ import { PlacementArray, positionElements } from '../util/positioning';
 import { isDefined, toString } from '../util/util';
 
 import { NgbTypeaheadConfig } from './typeahead-config';
-import { NgbTypeaheadWindow, ResultTemplateContext, WindowTemplateContext } from './typeahead-window';
+import { NgbTypeaheadWindow, ResultTemplateContext } from './typeahead-window';
 
 const NGB_TYPEAHEAD_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -53,6 +53,12 @@ export interface NgbTypeaheadSelectItemEvent<T = any> {
    * Calling this function will prevent item selection from happening.
    */
   preventDefault: () => void;
+}
+export interface NgbTypeaheadTermChangedEvent<T = any> {
+  /**
+   * The term from input
+   */
+  term: string;
 }
 
 let nextWindowId = 0;
@@ -186,6 +192,7 @@ export class NgbTypeahead implements ControlValueAccessor, OnInit, OnDestroy {
    * Event payload is of type [`NgbTypeaheadSelectItemEvent`](#/components/typeahead/api#NgbTypeaheadSelectItemEvent).
    */
   @Output() selectItem = new EventEmitter<NgbTypeaheadSelectItemEvent>();
+  @Output() termChanged = new EventEmitter<NgbTypeaheadTermChangedEvent>();
 
   activeDescendant: string | null = null;
   popupId = `ngb-typeahead-${nextWindowId++}`;
@@ -231,6 +238,7 @@ export class NgbTypeahead implements ControlValueAccessor, OnInit, OnDestroy {
       tap((value) => {
         this._inputValueBackup = this.showHint ? value : null;
         this._onChange(this.editable ? value : undefined);
+        this.termChanged.emit({ term: value });
       })
     );
     const results$ = inputValues$.pipe(this.ngbTypeahead);

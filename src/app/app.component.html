@@ -22,9 +22,8 @@
           <a class="nav-link dropdown-toggle" (click)="toggle(active)"> Demo </a>
           <div class="dropdown-menu" [ngClass]="{ show: active }">
             <a class="dropdown-item" routerLink="/demo/basic">Basic Usage</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" routerLink="/demo/extend">Extend</a>
+            <a class="dropdown-item" routerLink="/demo/dynamic">Dynamic Data</a>
           </div>
         </li>
       </ul>

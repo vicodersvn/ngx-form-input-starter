@@ -6,10 +6,11 @@ import { getControlId, getControlName, getLabel, makeid } from '../../utils';
 import { WindowTemplateContext, ResultTemplateContext } from '../../typeahead/typeahead-window';
 import { TemplateRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NgbTypeaheadTermChangedEvent } from '../../typeahead/typeahead';
 @Component({
   selector: 'ng-bootstrap-typeahead',
   templateUrl: './ng-bootstrap-typeahead.component.html',
-  styles: [],
+  styleUrls: ['./ng-bootstrap-typeahead.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -20,11 +21,13 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector implements OnInit, OnDestroy {
   public model: any;
+  public term: string;
   public ngDestroyed$ = new Subject();
   public search?: (text: Observable<string>) => Observable<readonly any[]>;
   public inputFormatter?: (item: any) => string;
   public resultTemplate: TemplateRef<ResultTemplateContext>;
   public windowTemplate: TemplateRef<WindowTemplateContext>;
+  public fullWithWindow = true;
   private focus$ = new Subject<null>();
 
   @Input() formControl: NgxFormControl;
@@ -41,8 +44,22 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
     return this.control.options.ngClass;
   }
 
+  isRisk(value: any, term: undefined | string): boolean {
+    return value === undefined && term !== undefined && term !== '';
+  }
+
   focus(): void {
     this.focus$.next(null);
+  }
+
+  focusout(): void {
+    if (this.isRisk(this.control.value, this.term)) {
+      this.control.setValue(undefined);
+    }
+  }
+
+  termChanged(value: NgbTypeaheadTermChangedEvent): void {
+    this.term = value.term;
   }
 
   get combied_classes(): any {
@@ -57,10 +74,14 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
     return this.control.options.placeholder ? this.control.options.placeholder : '';
   }
 
-  ngOnInit(): void {
+  init(): void {
     this.control.valueChanges.pipe(takeUntil(this.ngDestroyed$)).subscribe(() => {
       this.formErrorDirective.rerender();
     });
+
+    if (this.control?.options.disabled === true) {
+      this.control.disable();
+    }
 
     this.resultTemplate = this.control?.options.resultTemplate ? this.control.options.resultTemplate : undefined;
     this.windowTemplate = this.control?.options.windowTemplate ? this.control.options.windowTemplate : undefined;
@@ -82,6 +103,10 @@ export class NgBootstrapTypeaheadComponent extends ControlValueAccessorConnector
     }
 
     this.inputFormatter = this.control?.options.inputFormatter ? this.control.options.inputFormatter : (item) => item.toString();
+  }
+
+  ngOnInit(): void {
+    this.init();
   }
 
   ngOnDestroy(): void {

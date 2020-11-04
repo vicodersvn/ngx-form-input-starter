@@ -1,0 +1,15 @@
+:host {
+  ::ng-deep {
+    .ngx-form-bootstrap-typeahead {
+      ngb-typeahead-window {
+        padding: 0;
+      }
+      &.ngx-form-full-width-window {
+        position: relative;
+        ngb-typeahead-window {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

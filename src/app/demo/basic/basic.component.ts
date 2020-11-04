@@ -1,9 +1,9 @@
-import { NgxBootstrapTypeaheadControl, WindowTemplateContext } from '../../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgxFormGroup } from '@ngxform/platform';
 import { Validators } from '@angular/forms';
 import { of, Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { NgxBootstrapTypeaheadControl, WindowTemplateContext } from '@ngxform/ng-bootstrap-typeahead';
 
 @Component({
   selector: 'app-basic',

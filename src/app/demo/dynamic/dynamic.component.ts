@@ -1,10 +1,10 @@
-import { NgxBootstrapTypeaheadControl, WindowTemplateContext } from '../../../../projects/ngxform/ng-bootstrap-typeahead/src/public-api';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgxFormGroup } from '@ngxform/platform';
 import { Validators } from '@angular/forms';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { NgxBootstrapTypeaheadControl, WindowTemplateContext } from '@ngxform/ng-bootstrap-typeahead';
 
 @Component({
   selector: 'app-dynamic',

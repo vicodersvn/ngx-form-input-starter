@@ -1,0 +1,3 @@
+[submodule "projects/ngxform/ng-bootstrap-typeahead"]
+	path = projects/ngxform/ng-bootstrap-typeahead
+	url = https://github.com/ngxform/ng-bootstrap-typeahead-control

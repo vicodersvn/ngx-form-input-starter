@@ -9,10 +9,11 @@ import { NgxFormUiModule } from '@ngxform/ui';
 import { HttpClientModule } from '@angular/common/http';
 import { ExtendComponent } from './extend/extend.component';
 import { DynamicComponent } from './dynamic/dynamic.component';
+import { NgxFormCommonModule } from '@ngxform/common';
 import { NgxFormTypeaheadModule } from '@ngxform/ng-bootstrap-typeahead';
 
 @NgModule({
   declarations: [BasicComponent, ExtendComponent, DynamicComponent],
-  imports: [CommonModule, HttpClientModule, DemoRoutingModule, FormsModule, ReactiveFormsModule, NgxFormModule, NgxFormUiModule, NgxFormTypeaheadModule]
+  imports: [CommonModule, HttpClientModule, DemoRoutingModule, FormsModule, ReactiveFormsModule, NgxFormModule, NgxFormUiModule, NgxFormTypeaheadModule, NgxFormCommonModule]
 })
 export class DemoModule {}
